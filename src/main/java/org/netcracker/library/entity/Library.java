@@ -1,5 +1,8 @@
+package org.netcracker.library.entity;
+
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 public class Library {
 
@@ -17,7 +20,7 @@ public class Library {
             singers.add(addSinger);
         }
         else {
-            Singer [] singerArr = new Singer[singers.toArray().length];
+            Singer[] singerArr = new Singer[singers.toArray().length];
             singers.toArray(singerArr);
             for(int i = 0; i < singerArr.length; ++i){
                 if(singerArr[i].getName().equals(addSinger.getName())){
@@ -33,7 +36,7 @@ public class Library {
 
     public void editSinger(Singer editSinger, String newSingerName) throws Exception {
         //Запоминаем альбомы
-        HashSet<Album> bucket = editSinger.getAlbums();
+        Set<Album> bucket = editSinger.getAlbums();
 
         //Создаём нового исполнителя
         Singer singer = new Singer(newSingerName);
@@ -71,7 +74,7 @@ public class Library {
 
     @Override
     public String toString() {
-        String result = new String("Library : \n");
+        String result = new String("org.netcracker.musiclibrary.entity.Library : \n");
         if(singers!= null) {
             for (Iterator<Singer> iterator = singers.iterator(); iterator.hasNext(); ) {
                 result += iterator.next().toString();

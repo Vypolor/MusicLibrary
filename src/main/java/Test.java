@@ -1,3 +1,8 @@
+import org.netcracker.library.entity.Album;
+import org.netcracker.library.entity.Library;
+import org.netcracker.library.entity.Singer;
+import org.netcracker.library.entity.Track;
+
 import java.util.HashSet;
 
 public class Test {
@@ -29,9 +34,10 @@ public class Test {
 
 
         album0.addTrack(intro);
+        album0.addTrack(intro2);
         album0.addTrack(runnin);
         album0.addTrack(gInMyLap);
-        album0.editTrack(intro, "qq", 1_23);
+        album0.editTrack(intro, new Track("qq", 1_23));
 
         album1.addTrack(ew);
         album1.addTrack(modus);
@@ -46,11 +52,12 @@ public class Test {
 
         HashSet<Singer> singers = new HashSet<>();
         singers.add(joji);
-        singers.add(savage21);;
+        singers.add(savage21);
 
         Library main = new Library(singers);
         System.out.println(main.getSingers().toArray().length);
         System.out.println(main.toString());
+        System.out.println(album0.getTracks().size());
 
     }
 }
