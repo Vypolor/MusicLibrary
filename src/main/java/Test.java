@@ -56,7 +56,7 @@ public class Test {
         singers.put(joji.getName(), joji);
         singers.put(savage21.getName(), savage21);
 
-        Library main = new Library("Test", singers);
+        Library main = Library.getInstance("Test", singers);
         System.out.println(main.getSingers().size());
         System.out.println(main.toString());
         System.out.println(album0.getTracks().size());

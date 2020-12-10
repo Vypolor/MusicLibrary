@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.*;
 
 public class Library implements Serializable {
+    private static Library instance = null;
 
     private String name;
     private Map<String, Singer> singers = new HashMap<>();
@@ -11,9 +12,17 @@ public class Library implements Serializable {
     public Library() {
     }
 
-    public Library(String name, Map<String, Singer> singers) {
+    private Library(String name, Map<String, Singer> singers) {
         this.name = name;
         this.singers = singers;
+    }
+
+    public static Library getInstance(String name, Map<String, Singer> singers) {
+        if (instance == null) {
+            instance = new Library(name, singers);
+        }
+
+        return instance;
     }
 
     public boolean addSinger(Singer addSinger) {
