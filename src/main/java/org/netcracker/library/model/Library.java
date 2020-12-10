@@ -17,9 +17,9 @@ public class Library implements Serializable {
         this.singers = singers;
     }
 
-    public static Library getInstance(String name, Map<String, Singer> singers) {
+    public static Library getInstance() {
         if (instance == null) {
-            instance = new Library(name, singers);
+            instance = new Library();
         }
 
         return instance;

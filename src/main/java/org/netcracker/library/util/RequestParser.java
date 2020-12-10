@@ -25,10 +25,16 @@ public class RequestParser {
         if (keyMatcher.find())
             key = keyMatcher.group(1);
 
-        int counter = 0;
-        while (argsMatcher.find()) {
-            args[counter] = argsMatcher.group(1);
-            counter++;
+//        int counter = 0;
+//        while (argsMatcher.find()) {
+//            args[counter] = argsMatcher.group(1);
+//            counter++;
+//        }
+
+        for (int i = 0; i < 4; i++) {
+            if (argsMatcher.find()) {
+                args[i] = argsMatcher.group(1);
+            }
         }
 
         return new Triple<>(cmdName, key, args);
