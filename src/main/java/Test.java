@@ -2,9 +2,9 @@ import org.netcracker.library.model.Album;
 import org.netcracker.library.model.Library;
 import org.netcracker.library.model.Singer;
 import org.netcracker.library.model.Track;
+import org.netcracker.library.util.RequestParser;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 public class Test {
@@ -61,5 +61,8 @@ public class Test {
         System.out.println(main.toString());
         System.out.println(album0.getTracks().size());
 
+
+        System.out.println(RequestParser.parseLength("01:05:10"));
+        System.out.println(RequestParser.parseCommand("/add -a \"Ya silach\" \"Ya super silach\" \"Legchaishaya\""));
     }
 }
