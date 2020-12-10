@@ -1,9 +1,11 @@
-import org.netcracker.library.entity.Album;
-import org.netcracker.library.entity.Library;
-import org.netcracker.library.entity.Singer;
-import org.netcracker.library.entity.Track;
+import org.netcracker.library.model.Album;
+import org.netcracker.library.model.Library;
+import org.netcracker.library.model.Singer;
+import org.netcracker.library.model.Track;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public class Test {
     public static void main(String[] args) throws Exception {
@@ -50,12 +52,12 @@ public class Test {
         joji.addAlbum(album1);
         joji.addAlbum(album2);
 
-        HashSet<Singer> singers = new HashSet<>();
-        singers.add(joji);
-        singers.add(savage21);
+        Map<String, Singer> singers = new HashMap<>();
+        singers.put(joji.getName(), joji);
+        singers.put(savage21.getName(), savage21);
 
-        Library main = new Library(singers);
-        System.out.println(main.getSingers().toArray().length);
+        Library main = new Library("Test", singers);
+        System.out.println(main.getSingers().size());
         System.out.println(main.toString());
         System.out.println(album0.getTracks().size());
 

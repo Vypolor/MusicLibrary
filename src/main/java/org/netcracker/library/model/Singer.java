@@ -1,21 +1,20 @@
-package org.netcracker.library.entity;
+package org.netcracker.library.model;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class Singer {
+public class Singer implements Serializable {
 
     private String name;
-    private Set<Album> albums = new HashSet<>();
+    private Map<String, Album> albums = new HashMap<>();
 
     public Singer(String name) {
         this.name = name;
     }
 
     //+
-    public Singer(String name, HashSet<Album> albums) {
+    public Singer(String name, HashMap<String, Album> albums) {
         this.name = name;
         this.albums = albums;
     }
@@ -23,18 +22,15 @@ public class Singer {
     public boolean addAlbum(Album addAlbum) {
         addAlbum.setSinger(this);
 
-        return albums.add(addAlbum);
+        Album prev = albums.put(addAlbum.getName(), addAlbum);
+
+        return !addAlbum.equals(prev);
     }
 
     //Для замены одного альбома другим
     public boolean editAlbum(Album oldAlbum, Album newAlbum) {
-        if (!albums.contains(oldAlbum))
-            return false;
-
-        if (!albums.contains(newAlbum)) {
-            oldAlbum.setName(newAlbum.getName());
-            return true;
-        }
+        if (deleteAlbum(oldAlbum))
+            return addAlbum(newAlbum);
 
         return false;
     }
@@ -42,7 +38,9 @@ public class Singer {
     public boolean deleteAlbum(Album delAlbum) {
         delAlbum.setSinger(null);
 
-        return albums.remove(delAlbum);
+        Album removed = albums.remove(delAlbum.getName());
+
+        return delAlbum.equals(removed);
     }
 
     public String getName() {
@@ -53,11 +51,11 @@ public class Singer {
         this.name = name;
     }
 
-    public Set<Album> getAlbums() {
+    public Map<String, Album> getAlbums() {
         return albums;
     }
 
-    public void setAlbums(Set<Album> albums) {
+    public void setAlbums(Map<String, Album> albums) {
         this.albums = albums;
     }
 
@@ -78,7 +76,7 @@ public class Singer {
     public String toString() {
         StringBuilder albumsList = new StringBuilder();
 
-        for (Album album : albums) {
+        for (Album album : albums.values()) {
             albumsList.append(album.toString());
         }
 

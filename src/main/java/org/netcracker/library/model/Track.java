@@ -1,8 +1,9 @@
-package org.netcracker.library.entity;
+package org.netcracker.library.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Track {
+public class Track implements Serializable {
 
     private String name;
     private Album album;
@@ -62,8 +63,8 @@ public class Track {
 
     @Override
     public String toString() {
-        return  "\t\t==========================\n"
-                + "\t\tTrack Name: " + getName()
+        return  "\t\t=========================="
+                + "\n\t\tTrack Name: " + getName()
                 + "\n\t\tTrack Length: " + getTime()
                 + "\n";
     }

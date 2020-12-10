@@ -1,14 +1,12 @@
-package org.netcracker.library.entity;
+package org.netcracker.library.model;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.*;
 
-public class Album {
+public class Album implements Serializable {
 
     private String name;
-    private Set<Track> tracks = new HashSet<>();
+    private Map<String, Track> tracks = new HashMap<>();
     private Singer singer;
 
     public Album(String name) {
@@ -22,7 +20,7 @@ public class Album {
     }
 
     //Для загрузки библиотеки (может ошибаюсь) +
-    public Album(String name, HashSet<Track> tracks, Singer singer) {
+    public Album(String name, HashMap<String, Track> tracks, Singer singer) {
         this.name = name;
         this.tracks = tracks;
         this.singer = singer;
@@ -32,21 +30,27 @@ public class Album {
     public boolean addTrack(Track addTrack) {
         addTrack.setAlbum(this);
 
-        return tracks.add(addTrack);
+        Track prev = tracks.put(addTrack.getName(), addTrack);
+
+        //return true if addTrack != previous associated Track
+        return !addTrack.equals(prev);
     }
 
     //Обычное изменение трека
     public boolean editTrack(Track oldTrack, Track newTrack) {
-        if (!deleteTrack(oldTrack))
-            return false;
+        if (deleteTrack(oldTrack))
+            return addTrack(newTrack);
 
-        return addTrack(newTrack);
+        return false;
     }
 
     public boolean deleteTrack(Track delTrack){
         delTrack.setAlbum(null);
 
-        return tracks.remove(delTrack);
+        Track removed = tracks.remove(delTrack.getName());
+
+        //return true if delTrack = previous associated Track
+        return delTrack.equals(removed);
     }
 
     public String getName() {
@@ -57,11 +61,11 @@ public class Album {
         this.name = name;
     }
 
-    public Set<Track> getTracks() {
+    public Map<String, Track> getTracks() {
         return tracks;
     }
 
-    public void setTracks(Set<Track> tracks) {
+    public void setTracks(Map<String, Track> tracks) {
         this.tracks = tracks;
     }
 
@@ -90,7 +94,7 @@ public class Album {
     public String toString() {
         StringBuilder tracksList = new StringBuilder("\n");
 
-        for (Track track : tracks) {
+        for (Track track : tracks.values()) {
             tracksList.append(track.toString());
         }
 
