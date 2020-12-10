@@ -7,6 +7,8 @@ import org.netcracker.library.model.Track;
 
 import org.netcracker.library.model.Library;
 
+import java.util.Map;
+
 public class DeleteCommand extends Command {
 
     public DeleteCommand(Library library, String key, String[] args) {
@@ -36,22 +38,37 @@ public class DeleteCommand extends Command {
 
     private boolean deleteAlbum(String albumName, String singerName){
 
-        Album album = new Album(albumName);
+        Map<String, Album> albums = library.getSingers().get(singerName).getAlbums();
 
+        Album delete = new Album("Error");
+
+        for( Album album : albums.values()){
+            if(album.getName().equals(albumName)){
+                delete = album;
+            }
+        }
         return library
                 .getSingers().get(singerName)
-                .deleteAlbum(album);
+                .deleteAlbum(delete);
 
     }
 
-    private boolean deleteTrack(String trackName, String albumName, String singerName){
+    private boolean deleteTrack(String trackName, String albumName, String singerName) {
 
-        Track track = new Track(trackName, 0);
+        Map<String, Track> tracks = library.getSingers().get(singerName).getAlbums().get(albumName).getTracks();
+
+        Track delete = new Track("Error", 0);
+
+        for( Track track : tracks.values()){
+            if(track.getName().equals(trackName)){
+                delete = track;
+            }
+        }
 
         return library
                 .getSingers().get(singerName)
                 .getAlbums().get(albumName)
-                .deleteTrack(track);
+                .deleteTrack(delete);
     }
 
 }
