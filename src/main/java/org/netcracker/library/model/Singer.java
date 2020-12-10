@@ -9,6 +9,9 @@ public class Singer implements Serializable {
     private String name;
     private Map<String, Album> albums = new HashMap<>();
 
+    public Singer() {
+    }
+
     public Singer(String name) {
         this.name = name;
     }

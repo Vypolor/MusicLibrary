@@ -5,16 +5,12 @@ import org.netcracker.library.model.Library;
 import org.netcracker.library.model.Singer;
 import org.netcracker.library.model.Track;
 
+import org.netcracker.library.model.Library;
+
 public class DeleteCommand extends Command {
 
-    private Library library;
-    private String key;
-    private String[] args;
-
-    DeleteCommand( Library library, String key, String[] args ){
-        this.library = library;
-        this.key = key;
-        this.args = args;
+    public DeleteCommand(Library library, String key, String[] args) {
+        super(library, key, args);
     }
 
     @Override
@@ -56,7 +52,6 @@ public class DeleteCommand extends Command {
                 .getSingers().get(singerName)
                 .getAlbums().get(albumName)
                 .deleteTrack(track);
-
     }
 
 }
