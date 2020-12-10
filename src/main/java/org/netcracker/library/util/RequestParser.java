@@ -1,12 +1,15 @@
 package org.netcracker.library.util;
 
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RequestParser {
 
     public static Triple<String, String, String> parseCommand(String request) {
+        String cmdName = null;
+        String key = null;
+        String[] args = new String[4];
+
         Pattern cmdNamePattern = Pattern.compile("(/[a-z]+)");
         Matcher cmdNameMatcher = cmdNamePattern.matcher(request);
 
@@ -15,10 +18,6 @@ public class RequestParser {
 
         Pattern argsPattern = Pattern.compile("\"([a-zA-Zа-яА-ЯёЁ\\s]+)\"");
         Matcher argsMatcher = argsPattern.matcher(request);
-
-        String cmdName = null;
-        String key = null;
-        String[] args = new String[4];
 
         if (cmdNameMatcher.find())
             cmdName = cmdNameMatcher.group(1);
