@@ -9,10 +9,10 @@ public class ShowCommand extends Command {
     }
 
     @Override
-    public boolean execute() {
+    public int execute() {
         show();
 
-        return true;
+        return 0;
     }
 
     private void show() {

@@ -25,6 +25,11 @@ public class Library implements Serializable {
         return instance;
     }
 
+    public static void setAll(String name, Map<String, Singer> singers) {
+        getInstance().setName(name);
+        getInstance().setSingers(singers);
+    }
+
     public boolean addSinger(Singer addSinger) {
         Singer prev = singers.put(addSinger.getName(), addSinger);
 

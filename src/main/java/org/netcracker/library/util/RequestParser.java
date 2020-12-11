@@ -16,7 +16,7 @@ public class RequestParser {
         Pattern keyPattern = Pattern.compile("(-[a-z])");
         Matcher keyMatcher = keyPattern.matcher(request);
 
-        Pattern argsPattern = Pattern.compile("\"([a-zA-Zа-яА-ЯёЁ\\s]+)\"");
+        Pattern argsPattern = Pattern.compile("\"([a-zA-Zа-яА-ЯёЁ0-9:\\s]+)\"");
         Matcher argsMatcher = argsPattern.matcher(request);
 
         if (cmdNameMatcher.find())

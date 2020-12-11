@@ -13,6 +13,6 @@ public abstract class Command {
         this.args = args;
     }
 
-    public abstract boolean execute();
+    public abstract int execute();
 
 }

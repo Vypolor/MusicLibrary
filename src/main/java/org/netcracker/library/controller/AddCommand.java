@@ -29,9 +29,9 @@ public class AddCommand extends Command {
     private int addSinger(String name) {
         Singer singer = new Singer(name);
 
-        if (!library.addSinger(singer)){
+        if (!library.addSinger(singer))
             return 130;
-        }
+
         return 0;
     }
 

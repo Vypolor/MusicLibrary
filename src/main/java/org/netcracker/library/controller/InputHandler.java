@@ -39,7 +39,7 @@ public class InputHandler {
         invokeCommand(res);
     }
 
-    public void invokeCommand(Triple<String, String, String> command) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    private void invokeCommand(Triple<String, String, String> command) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         commands.get(command.getName())
                 .getDeclaredConstructor(Library.class, String.class, String[].class)
                 .newInstance(Library.getInstance(), command.getKey(), command.getArgs())
