@@ -5,10 +5,6 @@ import org.netcracker.library.model.Library;
 import org.netcracker.library.model.Singer;
 import org.netcracker.library.model.Track;
 
-import org.netcracker.library.model.Library;
-
-import java.util.Map;
-
 public class DeleteCommand extends Command {
 
     public DeleteCommand(Library library, String key, String[] args) {
@@ -16,7 +12,7 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public boolean execute() {
+    public int execute() {
         switch (key){
             case "-t" :
                 return deleteTrack(args[0], args[1], args[2]);
@@ -24,40 +20,48 @@ public class DeleteCommand extends Command {
                 return deleteAlbum(args[0], args[1]);
             case "-s":
                 return deleteSinger(args[0]);
+            default:
+                return 500;
         }
-        return false;
     }
 
-    private boolean deleteSinger(String name){
+    private int deleteSinger(String name){
 
-        Singer temp = new Singer(name);
+        Singer delete = new Singer(name);
 
-        return library.deleteSinger(temp);
+        if (!library.deleteSinger(delete))
+            return 230;
 
+        return 0;
     }
 
-    private boolean deleteAlbum(String albumName, String singerName){
+    private int deleteAlbum(String albumName, String singerName){
 
-        Album delete = library.getSingers().get(singerName)
-                .getAlbums().get(albumName);
+        if (library.getSingers().get(singerName) == null)
+            return 230;
 
-        return library
-                .getSingers().get(singerName)
-                .deleteAlbum(delete);
+        Album delete = library.getSingers().get(singerName).getAlbums().get(albumName);
 
+        if (!library.getSingers().get(singerName).deleteAlbum(delete))
+            return 220;
+
+        return 0;
     }
 
-    private boolean deleteTrack(String trackName, String albumName, String singerName) {
+    private int deleteTrack(String trackName, String albumName, String singerName) {
 
-        Track delete = library.getSingers().get(singerName)
-                .getAlbums().get(albumName)
-                .getTracks().get(trackName);
+        if (library.getSingers().get(singerName) == null)
+            return 230;
 
+        if (library.getSingers().get(singerName).getAlbums().get(albumName) == null)
+            return 220;
 
-        return library
-                .getSingers().get(singerName)
-                .getAlbums().get(albumName)
-                .deleteTrack(delete);
+        Track delete = library.getSingers().get(singerName).getAlbums().get(albumName).getTracks().get(trackName);
+
+        if (!library.getSingers().get(singerName).getAlbums().get(albumName).deleteTrack(delete))
+            return 210;
+
+        return 0;
     }
 
 }

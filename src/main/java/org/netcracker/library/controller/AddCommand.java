@@ -4,6 +4,7 @@ import org.netcracker.library.model.Album;
 import org.netcracker.library.model.Library;
 import org.netcracker.library.model.Singer;
 import org.netcracker.library.model.Track;
+import org.netcracker.library.util.RequestParser;
 
 public class AddCommand extends Command {
 
@@ -12,7 +13,7 @@ public class AddCommand extends Command {
     }
 
     @Override
-    public boolean execute() {
+    public int execute() {
         switch (key) {
             case "-t":
                 return addTrack(args[0], args[1], args[2], args[3]);
@@ -20,33 +21,45 @@ public class AddCommand extends Command {
                 return addAlbum(args[0], args[1]);
             case "-s":
                 return addSinger(args[0]);
+            default:
+                return 500;
         }
-
-        return false;
     }
 
-    private boolean addSinger(String name) {
+    private int addSinger(String name) {
         Singer singer = new Singer(name);
 
-        return library.addSinger(singer);
+        if (!library.addSinger(singer)){
+            return 130;
+        }
+        return 0;
     }
 
-    private boolean addAlbum(String albumName, String singerName) {
+    private int addAlbum(String albumName, String singerName) {
         Album album = new Album(albumName);
 
-        return library
-                .getSingers().get(singerName)
-                .addAlbum(album);
+        if (library.getSingers().get(singerName) == null)
+            return 230;
+
+        if (!library.getSingers().get(singerName).addAlbum(album))
+            return 120;
+
+        return 0;
     }
 
-    private boolean addTrack(String trackName, String length, String albumName, String singerName) {
-        Track track = new Track(trackName, Long.parseLong(length));
+    private int addTrack(String trackName, String length, String albumName, String singerName) {
+        Track track = new Track(trackName, RequestParser.parseLength(length));
 
-        //Map.get() needs to be handled
-        return library
-                .getSingers().get(singerName)
-                .getAlbums().get(albumName)
-                .addTrack(track);
+        if (library.getSingers().get(singerName) == null)
+            return 230;
+
+        if (library.getSingers().get(singerName).getAlbums().get(albumName) == null)
+            return 220;
+
+        if (!library.getSingers().get(singerName).getAlbums().get(albumName).addTrack(track))
+            return 110;
+
+        return 0;
     }
 
 }
