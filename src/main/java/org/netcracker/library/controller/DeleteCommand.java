@@ -38,15 +38,9 @@ public class DeleteCommand extends Command {
 
     private boolean deleteAlbum(String albumName, String singerName){
 
-        Map<String, Album> albums = library.getSingers().get(singerName).getAlbums();
+        Album delete = library.getSingers().get(singerName)
+                .getAlbums().get(albumName);
 
-        Album delete = new Album("Error");
-
-        for( Album album : albums.values()){
-            if(album.getName().equals(albumName)){
-                delete = album;
-            }
-        }
         return library
                 .getSingers().get(singerName)
                 .deleteAlbum(delete);
@@ -55,15 +49,10 @@ public class DeleteCommand extends Command {
 
     private boolean deleteTrack(String trackName, String albumName, String singerName) {
 
-        Map<String, Track> tracks = library.getSingers().get(singerName).getAlbums().get(albumName).getTracks();
+        Track delete = library.getSingers().get(singerName)
+                .getAlbums().get(albumName)
+                .getTracks().get(trackName);
 
-        Track delete = new Track("Error", 0);
-
-        for( Track track : tracks.values()){
-            if(track.getName().equals(trackName)){
-                delete = track;
-            }
-        }
 
         return library
                 .getSingers().get(singerName)
