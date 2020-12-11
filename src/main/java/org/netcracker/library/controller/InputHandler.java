@@ -29,12 +29,14 @@ public class InputHandler {
         this.input = input;
     }
 
-    public Triple<String, String, String> readRequest() throws IOException {
-        BufferedReader in = new BufferedReader(input);
+    public void readRequest() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        //BufferedReader in = new BufferedReader(input);
 
-        String request = in.readLine();
+        Scanner in = new Scanner(System.in);
+        String request = in.nextLine();
 
-        return RequestParser.parseCommand(request);
+        Triple<String, String, String> res = RequestParser.parseCommand(request);
+        invokeCommand(res);
     }
 
     public void invokeCommand(Triple<String, String, String> command) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
