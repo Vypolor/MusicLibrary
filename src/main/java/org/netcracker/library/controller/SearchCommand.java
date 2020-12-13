@@ -16,12 +16,16 @@ public class SearchCommand extends Command {
 
     @Override
     public int execute() {
-        return searchTrack(args[0]);
+        if((args[0].charAt(0)) == '*'){
+            return searchTrack(args[0]);
+        }
+        return 500;
     }
 
     public int searchTrack(String searchString){
 
-        Pattern p = Pattern.compile(searchString, Pattern.CASE_INSENSITIVE);
+        String reuslt = searchString.substring(1);
+        Pattern p = Pattern.compile(reuslt, Pattern.CASE_INSENSITIVE);
 
         Matcher m;
 
