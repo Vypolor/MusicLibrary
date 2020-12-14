@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class SearchCommand extends Command {
 
     protected SearchCommand(Library library, String key, String[] args) {
-        super(library,null, args);
+        super(library, key, args);
     }
 
     @Override
@@ -26,8 +26,12 @@ public class SearchCommand extends Command {
 
     public int patternSearch(String searchString){
 
-        String reuslt = searchString.substring(1);
-        Pattern p = Pattern.compile(reuslt, Pattern.CASE_INSENSITIVE);
+        String strPattern =
+                "^" + searchString
+                .replaceAll("\\?", ".")
+                .replaceAll("\\*", ".*") + "$";
+
+        Pattern p = Pattern.compile(strPattern, Pattern.CASE_INSENSITIVE);
 
         Matcher m;
 
@@ -44,6 +48,7 @@ public class SearchCommand extends Command {
                 }
             }
         }
+
         System.out.println("Number of matches: " + count);
         return 0;
     }

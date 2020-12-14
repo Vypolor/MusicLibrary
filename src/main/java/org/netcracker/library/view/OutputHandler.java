@@ -9,9 +9,11 @@ public class OutputHandler {
 
     public OutputHandler(){}
 
-    private Map<Integer, String> errors = new HashMap<>();
+    private final Map<Integer, String> errors = new HashMap<>();
 
     {
+        errors.put(0, "Successful!");
+
         errors.put(110, "This track is already in the album");
         errors.put(120, "This album is already in the library");
         errors.put(130, "This artist is already in the library");
@@ -30,8 +32,6 @@ public class OutputHandler {
     }
 
     public void errorHandler(int code){
-        if(code != 0){
-            System.out.println("Error code #" + code + " : " + errors.get(code));
-        }
+            System.out.println(errors.get(code));
     }
 }

@@ -13,7 +13,7 @@ public class DeleteCommand extends Command {
 
     @Override
     public int execute() {
-        switch (key){
+        switch (key) {
             case "-t" :
                 return deleteTrack(args[0], args[1], args[2]);
             case "-a":
