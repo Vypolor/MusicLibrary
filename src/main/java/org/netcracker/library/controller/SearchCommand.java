@@ -16,13 +16,15 @@ public class SearchCommand extends Command {
 
     @Override
     public int execute() {
-        if((args[0].charAt(0)) == '*'){
-            return searchTrack(args[0]);
+        if((args[0].contains("*") || args[0].contains("?")) ){
+            return patternSearch(args[0]);
         }
+        else
+            simpleSearch(args[0]);
         return 500;
     }
 
-    public int searchTrack(String searchString){
+    public int patternSearch(String searchString){
 
         String reuslt = searchString.substring(1);
         Pattern p = Pattern.compile(reuslt, Pattern.CASE_INSENSITIVE);
@@ -42,6 +44,24 @@ public class SearchCommand extends Command {
                 }
             }
         }
+        System.out.println("Number of matches: " + count);
+        return 0;
+    }
+
+    public int simpleSearch(String searchString){
+
+        int count = 0;
+        Track track;
+
+        for(Singer singer: library.getSingers().values()){
+            for(Album album: singer.getAlbums().values()){
+                if((track = album.getTracks().get(searchString)) != null){
+                    System.out.println(singer.getName() + " | " + album.getName() + " | " + track.getName());
+                    ++count;
+                }
+            }
+        }
+
         System.out.println("Number of matches: " + count);
         return 0;
     }

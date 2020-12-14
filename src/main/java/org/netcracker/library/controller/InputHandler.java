@@ -19,10 +19,12 @@ public class InputHandler {
     {
         input = new InputStreamReader(System.in);
 
+        commands.put("/?", HelpCommand.class);
         commands.put("/add", AddCommand.class);
         commands.put("/delete", DeleteCommand.class);
-        commands.put("/show", ShowCommand.class);
         commands.put("/exit", ExitCommand.class);
+        commands.put("/search", SearchCommand.class);
+        commands.put("/show", ShowCommand.class);
     }
 
     public InputHandler() {
