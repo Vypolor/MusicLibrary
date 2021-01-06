@@ -1,8 +1,13 @@
 package org.netcracker.library.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.Objects;
 
+@XmlRootElement(name = "track")
 public class Track implements Serializable {
 
     private String name;
@@ -36,14 +41,17 @@ public class Track implements Serializable {
         return time;
     }
 
+    @XmlAttribute(name = "name")
     public void setName(String name) {
         this.name = name;
     }
 
+    @XmlTransient
     public void setAlbum(Album album) {
         this.album = album;
     }
 
+    @XmlAttribute(name = "length")
     public void setTime(long time) {
         this.time = time;
     }

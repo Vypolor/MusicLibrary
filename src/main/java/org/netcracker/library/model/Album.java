@@ -1,13 +1,18 @@
 package org.netcracker.library.model;
 
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.*;
 
+@XmlRootElement(name = "album")
 public class Album implements Serializable {
 
     private String name;
     private Map<String, Track> tracks = new HashMap<>();
     private Singer singer;
+
+    public Album() {
+    }
 
     public Album(String name) {
         this.name = name;
@@ -57,6 +62,7 @@ public class Album implements Serializable {
         return name;
     }
 
+    @XmlAttribute(name = "name")
     public void setName(String name) {
         this.name = name;
     }
@@ -65,6 +71,7 @@ public class Album implements Serializable {
         return tracks;
     }
 
+    @XmlElement(name = "tracks")
     public void setTracks(Map<String, Track> tracks) {
         this.tracks = tracks;
     }
@@ -73,6 +80,7 @@ public class Album implements Serializable {
         return singer;
     }
 
+    @XmlTransient
     public void setSinger(Singer singer) {
         this.singer = singer;
     }

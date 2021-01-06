@@ -1,9 +1,13 @@
 package org.netcracker.library.model;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@XmlRootElement(name = "singer")
 public class Singer implements Serializable {
 
     private String name;
@@ -50,6 +54,7 @@ public class Singer implements Serializable {
         return name;
     }
 
+    @XmlAttribute(name = "name")
     public void setName(String name) {
         this.name = name;
     }
@@ -58,6 +63,7 @@ public class Singer implements Serializable {
         return albums;
     }
 
+    @XmlElement(name = "albums")
     public void setAlbums(Map<String, Album> albums) {
         this.albums = albums;
     }

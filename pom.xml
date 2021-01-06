@@ -20,5 +20,14 @@
         </plugins>
     </build>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxb-provider</artifactId>
+            <version>4.5.8.Final</version>
+        </dependency>
+
+    </dependencies>
+
 
 </project>
