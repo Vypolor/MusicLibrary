@@ -24,8 +24,9 @@ public enum Code {
     EDIT_ALBUM_ERROR(320, "album"),
     EDIT_SINGER_ERROR(330, "singer"),
 
-    LOAD_ERROR(400 , null),
-    SAVE_ERROR(401, null),
+    LOAD_ERROR(401 , null),
+    SAVE_ERROR(402, null),
+    SAVE_COMPLETE(403, null),
     INVALID_PATH(404, null),
 
     EMPTY_SEARCH(700, null),
