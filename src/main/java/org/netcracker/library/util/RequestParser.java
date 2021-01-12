@@ -1,11 +1,29 @@
 package org.netcracker.library.util;
 
+import org.netcracker.library.controller.*;
+import org.netcracker.library.model.Library;
+
+import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RequestParser {
 
-    public static Triple<String, String, String> parseCommand(String request) {
+    private static final Map<String, Class<? extends Command>> commands = new HashMap<>();
+
+    static {
+        commands.put("/?", HelpCommand.class);
+        commands.put("/add", AddCommand.class);
+        commands.put("/delete", DeleteCommand.class);
+        commands.put("/exit", ExitCommand.class);
+        commands.put("/search", SearchCommand.class);
+        commands.put("/show", ShowCommand.class);
+    }
+
+    public static Command parseCommand(String request) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         String cmdName = null;
         String key = null;
         String[] args = new String[4];
@@ -25,19 +43,15 @@ public class RequestParser {
         if (keyMatcher.find())
             key = keyMatcher.group(1);
 
-//        int counter = 0;
-//        while (argsMatcher.find()) {
-//            args[counter] = argsMatcher.group(1);
-//            counter++;
-//        }
-
         for (int i = 0; i < 4; i++) {
             if (argsMatcher.find()) {
                 args[i] = argsMatcher.group(1);
             }
         }
 
-        return new Triple<>(cmdName, key, args);
+        return commands.get(cmdName)
+                .getDeclaredConstructor(Library.class, String.class, String.class, String[].class)
+                .newInstance(Library.getInstance(), cmdName, key, args);
     }
 
     public static long parseLength(String length) {

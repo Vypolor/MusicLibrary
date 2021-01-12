@@ -10,21 +10,26 @@ import java.util.regex.Pattern;
 
 public class SearchCommand extends Command {
 
-    protected SearchCommand(Library library, String key, String[] args) {
-        super(library, key, args);
+    public SearchCommand(Library library, String name, String key, String[] args) {
+        super(library, name, key, args);
     }
 
     @Override
-    public int execute() {
-        if((args[0].contains("*") || args[0].contains("?")) ){
-            return patternSearch(args[0]);
+    public ExecutionResult execute() {
+        ResultCode resultCode;
+
+        if ((args[0].contains("*") || args[0].contains("?")) ) {
+            resultCode = patternSearch(args[0]);
+
+            return new ExecutionResult(resultCode, name, key, args);
+        } else {
+            resultCode = simpleSearch(args[0]);
         }
-        else
-            simpleSearch(args[0]);
-        return 500;
+
+        return new ExecutionResult(ResultCode.INVALID_KEY, name, key, args);
     }
 
-    public int patternSearch(String searchString){
+    public ResultCode patternSearch(String searchString){
 
         String strPattern =
                 "^" + searchString
@@ -37,37 +42,35 @@ public class SearchCommand extends Command {
 
         int count = 0;
 
-        for(Singer singer : library.getSingers().values()){
-            for(Album album: singer.getAlbums().values()){
-                for(Track track: album.getTracks().values()){
+        for (Singer singer : library.getSingers().values())
+            for (Album album: singer.getAlbums().values())
+                for (Track track: album.getTracks().values()) {
                     m = p.matcher(track.getName());
-                    if(m.find()){
+                    if (m.find()) {
                         System.out.println(singer.getName() + " | " + album.getName() + " | " + track.getName());
                         ++count;
                     }
                 }
-            }
-        }
 
         System.out.println("Number of matches: " + count);
-        return 0;
+
+        return ResultCode.SUCCESS;
     }
 
-    public int simpleSearch(String searchString){
+    public ResultCode simpleSearch(String searchString){
 
         int count = 0;
         Track track;
 
-        for(Singer singer: library.getSingers().values()){
-            for(Album album: singer.getAlbums().values()){
-                if((track = album.getTracks().get(searchString)) != null){
+        for (Singer singer: library.getSingers().values())
+            for (Album album: singer.getAlbums().values())
+                if ((track = album.getTracks().get(searchString)) != null) {
                     System.out.println(singer.getName() + " | " + album.getName() + " | " + track.getName());
                     ++count;
                 }
-            }
-        }
 
         System.out.println("Number of matches: " + count);
-        return 0;
+
+        return ResultCode.SUCCESS;
     }
 }

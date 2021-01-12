@@ -1,6 +1,7 @@
 package org.netcracker.library;
 
 import org.netcracker.library.controller.InputHandler;
+import org.netcracker.library.controller.ShowCommand;
 import org.netcracker.library.model.Album;
 import org.netcracker.library.model.Library;
 import org.netcracker.library.model.Singer;
@@ -80,8 +81,6 @@ public class Test {
         Library test = Library.getInstance();
         test.setName(main.getName());
         test.setSingers(main.getSingers());
-
-        System.out.println("A?S?D".replaceAll("\\?", "\\\\."));
 
         for (;;) {
             inputHandler.readRequest();

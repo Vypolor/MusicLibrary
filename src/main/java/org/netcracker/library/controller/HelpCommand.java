@@ -4,15 +4,17 @@ import org.netcracker.library.model.Library;
 
 public class HelpCommand extends Command{
 
-    protected HelpCommand(Library library, String key, String[] args) {
-        super(library, key, args);
+    public HelpCommand(Library library, String name, String key, String[] args) {
+        super(library, name, key, args);
     }
 
     @Override
-    public int execute() {
+    public ExecutionResult execute() {
         System.out.println("========================\n\tList of commands\n========================");
+
         printCommandList();
-        return 0;
+
+        return new ExecutionResult(ResultCode.SUCCESS, name, key, args);
     }
 
     public void printCommandList(){

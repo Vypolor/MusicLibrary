@@ -4,15 +4,15 @@ import org.netcracker.library.model.Library;
 
 public class ShowCommand extends Command {
 
-    public ShowCommand(Library library, String key, String[] args) {
-        super(library, key, args);
+    public ShowCommand(Library library, String name, String key, String[] args) {
+        super(library, name, key, args);
     }
 
     @Override
-    public int execute() {
+    public ExecutionResult execute() {
         show();
 
-        return 0;
+        return new ExecutionResult(ResultCode.SUCCESS, name, key, args);
     }
 
     private void show() {

@@ -8,58 +8,65 @@ import org.netcracker.library.util.RequestParser;
 
 public class AddCommand extends Command {
 
-    public AddCommand(Library library, String key, String[] args) {
-        super(library, key, args);
+    public AddCommand(Library library, String name, String key, String[] args) {
+        super(library, name, key, args);
     }
 
     @Override
-    public int execute() {
+    public ExecutionResult execute() {
+        ResultCode resultCode;
+
         switch (key) {
             case "-t":
-                return addTrack(args[0], args[1], args[2], args[3]);
+                resultCode = addTrack(args[0], args[1], args[2], args[3]);
             case "-a":
-                return addAlbum(args[0], args[1]);
+                resultCode = addAlbum(args[0], args[1]);
             case "-s":
-                return addSinger(args[0]);
+                resultCode = addSinger(args[0]);
             default:
-                return 500;
+                resultCode = ResultCode.INVALID_KEY;
         }
+
+        return new ExecutionResult(resultCode, name, key, args);
     }
 
-    private int addSinger(String name) {
+    private ResultCode addSinger(String name) {
         Singer singer = new Singer(name);
 
         if (!library.addSinger(singer))
-            return 130;
+            return ResultCode.ITEM_EXISTS;
 
-        return 0;
+        return ResultCode.SUCCESS;
     }
 
-    private int addAlbum(String albumName, String singerName) {
+    private ResultCode addAlbum(String albumName, String singerName) {
         Album album = new Album(albumName);
 
         if (library.getSingers().get(singerName) == null)
-            return 230;
+            return ResultCode.ITEM_NOT_EXISTS;
 
         if (!library.getSingers().get(singerName).addAlbum(album))
-            return 120;
+            return ResultCode.ITEM_EXISTS;
 
-        return 0;
+        return ResultCode.SUCCESS;
     }
 
-    private int addTrack(String trackName, String length, String albumName, String singerName) {
+    private ResultCode addTrack(String trackName, String length, String albumName, String singerName) {
         Track track = new Track(trackName, RequestParser.parseLength(length));
 
         if (library.getSingers().get(singerName) == null)
-            return 230;
+            return ResultCode.ITEM_NOT_EXISTS;
 
-        if (library.getSingers().get(singerName).getAlbums().get(albumName) == null)
-            return 220;
+        if (library.getSingers().get(singerName)
+                .getAlbums().get(albumName) == null)
+            return ResultCode.ITEM_NOT_EXISTS;
 
-        if (!library.getSingers().get(singerName).getAlbums().get(albumName).addTrack(track))
-            return 110;
+        if (!library.getSingers().get(singerName)
+                .getAlbums().get(albumName)
+                .addTrack(track))
+            return ResultCode.ITEM_EXISTS;
 
-        return 0;
+        return ResultCode.SUCCESS;
     }
 
 }
