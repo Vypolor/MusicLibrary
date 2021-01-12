@@ -1,9 +1,6 @@
 package org.netcracker.library.controller;
 
-import org.netcracker.library.model.Album;
-import org.netcracker.library.model.Library;
-import org.netcracker.library.model.Singer;
-import org.netcracker.library.model.Track;
+import org.netcracker.library.model.*;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,16 +12,15 @@ public class SearchCommand extends Command {
     }
 
     @Override
-    public int execute() {
+    public MessageInformation execute() {
         if((args[0].contains("*") || args[0].contains("?")) ){
             return patternSearch(args[0]);
         }
         else
-            simpleSearch(args[0]);
-        return 500;
+            return simpleSearch(args[0]);
     }
 
-    public int patternSearch(String searchString){
+    public MessageInformation patternSearch(String searchString){
 
         String strPattern =
                 "^" + searchString
@@ -49,11 +45,17 @@ public class SearchCommand extends Command {
             }
         }
 
+        System.out.println("==============================" + count);
         System.out.println("Number of matches: " + count);
-        return 0;
+        System.out.println("==============================" + count);
+        if(count == 0 ){
+            return new MessageInformation(Code.EMPTY_SEARCH);
+        }
+        else
+            return new MessageInformation(Code.NOT_EMPTY_SEARCH);
     }
 
-    public int simpleSearch(String searchString){
+    public MessageInformation simpleSearch(String searchString){
 
         int count = 0;
         Track track;
@@ -67,7 +69,13 @@ public class SearchCommand extends Command {
             }
         }
 
+        System.out.println("==============================" + count);
         System.out.println("Number of matches: " + count);
-        return 0;
+        System.out.println("==============================" + count);
+        if(count == 0 ){
+            return new MessageInformation(Code.EMPTY_SEARCH);
+        }
+        else
+            return new MessageInformation(Code.NOT_EMPTY_SEARCH);
     }
 }

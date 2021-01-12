@@ -26,7 +26,6 @@
             <artifactId>resteasy-jaxb-provider</artifactId>
             <version>4.5.8.Final</version>
         </dependency>
-
     </dependencies>
 
 

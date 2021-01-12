@@ -1,9 +1,6 @@
 package org.netcracker.library.controller;
 
-import org.netcracker.library.model.Album;
-import org.netcracker.library.model.Library;
-import org.netcracker.library.model.Singer;
-import org.netcracker.library.model.Track;
+import org.netcracker.library.model.*;
 
 public class DeleteCommand extends Command {
 
@@ -12,7 +9,7 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public int execute() {
+    public MessageInformation execute() {
         switch (key) {
             case "-t" :
                 return deleteTrack(args[0], args[1], args[2]);
@@ -21,47 +18,47 @@ public class DeleteCommand extends Command {
             case "-s":
                 return deleteSinger(args[0]);
             default:
-                return 500;
+                return new MessageInformation(key, Code.INVALID_KEY);
         }
     }
 
-    private int deleteSinger(String name){
+    private MessageInformation deleteSinger(String name){
 
         Singer delete = new Singer(name);
 
         if (!library.deleteSinger(delete))
-            return 230;
+            return new MessageInformation(null, null, name, Code.SINGER_MISSING_FROM_LIBRARY);
 
-        return 0;
+        return new MessageInformation(null, null, name, Code.DELETE_SINGER_TRUE);
     }
 
-    private int deleteAlbum(String albumName, String singerName){
+    private MessageInformation deleteAlbum(String albumName, String singerName){
 
         if (library.getSingers().get(singerName) == null)
-            return 230;
+            return new MessageInformation(null, null, singerName, Code.SINGER_MISSING_FROM_LIBRARY);
 
         Album delete = library.getSingers().get(singerName).getAlbums().get(albumName);
 
         if (!library.getSingers().get(singerName).deleteAlbum(delete))
-            return 220;
+            return new MessageInformation(null, albumName, null, Code.ALBUM_MISSING_FROM_LIBRARY);
 
-        return 0;
+        return new MessageInformation(null, albumName, singerName, Code.DELETE_ALBUM_TRUE);
     }
 
-    private int deleteTrack(String trackName, String albumName, String singerName) {
+    private MessageInformation deleteTrack(String trackName, String albumName, String singerName) {
 
         if (library.getSingers().get(singerName) == null)
-            return 230;
+            return new MessageInformation(null, null, singerName, Code.SINGER_MISSING_FROM_LIBRARY);
 
         if (library.getSingers().get(singerName).getAlbums().get(albumName) == null)
-            return 220;
+            return new MessageInformation(null, albumName, null, Code.ALBUM_MISSING_FROM_LIBRARY);
 
         Track delete = library.getSingers().get(singerName).getAlbums().get(albumName).getTracks().get(trackName);
 
         if (!library.getSingers().get(singerName).getAlbums().get(albumName).deleteTrack(delete))
-            return 210;
+            return new MessageInformation(trackName, albumName, null, Code.TRACK_MISSING_FROM_LIBRARY);
 
-        return 0;
+        return new MessageInformation(trackName, albumName, singerName, Code.DELETE_TRACK_TRUE);
     }
 
 }

@@ -1,5 +1,6 @@
 package org.netcracker.library.controller;
 
+import org.netcracker.library.model.Code;
 import org.netcracker.library.model.Library;
 
 public class ShowCommand extends Command {
@@ -9,10 +10,10 @@ public class ShowCommand extends Command {
     }
 
     @Override
-    public int execute() {
+    public MessageInformation execute() {
         show();
 
-        return 0;
+        return new MessageInformation(Code.SUCCESSFUL);
     }
 
     private void show() {

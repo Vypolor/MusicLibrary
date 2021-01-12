@@ -1,5 +1,6 @@
 package org.netcracker.library.controller;
 
+import org.netcracker.library.model.Code;
 import org.netcracker.library.model.Library;
 
 import javax.xml.bind.JAXBContext;
@@ -13,18 +14,18 @@ public class SaveCommand extends Command {
     }
 
     @Override
-    public int execute() {
+    public MessageInformation execute() {
         try {
             saveToFile(args[0]);
         } catch (JAXBException e) {
             e.printStackTrace();
-            return 500; //any bad code
+            return new MessageInformation(Code.SAVE_ERROR); //any bad code
         }
 
-        return 0;
+        return new MessageInformation(Code.SAVE_COMPLETE);
     }
     
-    private int saveToFile(String path) throws JAXBException {
+    private MessageInformation saveToFile(String path) throws JAXBException {
         File file = new File(path);
 
         JAXBContext context = JAXBContext.newInstance(Library.class);
@@ -32,8 +33,6 @@ public class SaveCommand extends Command {
 
         marshaller.marshal(Library.getInstance(), file);
 
-        return 0;
+        return new MessageInformation(Code.SAVE_COMPLETE);
     }
-
-
 }

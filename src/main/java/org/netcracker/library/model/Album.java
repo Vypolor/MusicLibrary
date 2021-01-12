@@ -50,6 +50,9 @@ public class Album implements Serializable {
     }
 
     public boolean deleteTrack(Track delTrack){
+        if(delTrack == null){
+            return false;
+        }
         delTrack.setAlbum(null);
 
         Track removed = tracks.remove(delTrack.getName());

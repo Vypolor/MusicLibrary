@@ -13,6 +13,6 @@ public abstract class Command {
         this.args = args;
     }
 
-    public abstract int execute();
+    public abstract MessageInformation execute();
 
 }

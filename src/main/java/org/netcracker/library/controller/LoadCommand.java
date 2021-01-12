@@ -13,7 +13,7 @@ import java.io.File;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class LoadCommand extends Command {
+/*public class LoadCommand extends Command {
     public LoadCommand(Library library, String key, String[] args) {
         super(library, key, args);
     }
@@ -68,4 +68,4 @@ public class LoadCommand extends Command {
 
         return (Library) unmarshaller.unmarshal(file);
     }
-}
+}*/

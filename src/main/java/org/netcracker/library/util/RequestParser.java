@@ -10,7 +10,7 @@ public class RequestParser {
         String key = null;
         String[] args = new String[4];
 
-        Pattern cmdNamePattern = Pattern.compile("(/[a-z]+)");
+        Pattern cmdNamePattern = Pattern.compile("(/[a-z?]+)");
         Matcher cmdNameMatcher = cmdNamePattern.matcher(request);
 
         Pattern keyPattern = Pattern.compile("(-[a-z])");

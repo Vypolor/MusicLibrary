@@ -1,5 +1,6 @@
 package org.netcracker.library.controller;
 
+import org.netcracker.library.model.Code;
 import org.netcracker.library.model.Library;
 
 public class HelpCommand extends Command{
@@ -9,10 +10,10 @@ public class HelpCommand extends Command{
     }
 
     @Override
-    public int execute() {
+    public MessageInformation execute() {
         System.out.println("========================\n\tList of commands\n========================");
         printCommandList();
-        return 0;
+        return new MessageInformation(Code.SUCCESSFUL);
     }
 
     public void printCommandList(){
@@ -31,9 +32,9 @@ public class HelpCommand extends Command{
                 "Deleting a singer:/delete -s \"singer name\"";
         String search = "\n3. /search\n"+
                 "Searching a track: /search \"track name\" also you can use \"*\" and \"?\"";
-        String show = "\n4. /show"+
+        String show = "\n4. /show "+
                 "shows the entire library: /show";
-        String exit = "\n5. /exit"+
+        String exit = "\n5. /exit "+
                 "exit the program: /exit";
         System.out.println(add);
         System.out.println(delete);

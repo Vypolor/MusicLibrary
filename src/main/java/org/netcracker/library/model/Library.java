@@ -16,9 +16,10 @@ public class Library implements Serializable {
     public Library() {
     }
 
-    private Library(String name, Map<String, Singer> singers) {
+    public Library(String name, Map<String, Singer> singers) {
         this.name = name;
         this.singers = singers;
+        //instance = this;
     }
 
     public static Library getInstance() {

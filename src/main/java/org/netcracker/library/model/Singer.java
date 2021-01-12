@@ -34,7 +34,6 @@ public class Singer implements Serializable {
         return !addAlbum.equals(prev);
     }
 
-    //Для замены одного альбома другим
     public boolean editAlbum(Album oldAlbum, Album newAlbum) {
         if (deleteAlbum(oldAlbum))
             return addAlbum(newAlbum);

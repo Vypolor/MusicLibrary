@@ -25,6 +25,7 @@ public class InputHandler {
         commands.put("/exit", ExitCommand.class);
         commands.put("/search", SearchCommand.class);
         commands.put("/show", ShowCommand.class);
+        commands.put("/save", SaveCommand.class);
     }
 
     public InputHandler() {
@@ -41,7 +42,8 @@ public class InputHandler {
         String request = in.nextLine();
 
         Triple<String, String, String> res = RequestParser.parseCommand(request);
-        sendCode(invokeCommand(res).execute(), new OutputHandler());
+        MessageInformation information = invokeCommand(res).execute();
+        sendMessage(information, new OutputHandler());
     }
 
     private Command invokeCommand(Triple<String, String, String> command) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -50,7 +52,7 @@ public class InputHandler {
                 .newInstance(Library.getInstance(), command.getKey(), command.getArgs());
     }
 
-    public void sendCode(int code, OutputHandler oh){
-        oh.errorHandler(code);
+    public void sendMessage(MessageInformation information, OutputHandler oh){
+        oh.generateMessage(information);
     }
 }
