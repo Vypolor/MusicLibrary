@@ -32,12 +32,14 @@ public class LoadCommand extends Command {
                 } catch (JAXBException e) {
                     resultCode = ResultCode.UNEXPECTED_SAVE_ERROR;
                 }
+                break;
             case "-d", "-n", "-c":
                 try {
                     resultCode = loadFromFileMerging(args[0], key);
                 } catch (JAXBException e) {
                     resultCode = ResultCode.UNEXPECTED_SAVE_ERROR;
                 }
+                break;
             default:
                 resultCode = ResultCode.INVALID_KEY;
         }

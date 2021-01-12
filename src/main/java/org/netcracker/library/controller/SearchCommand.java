@@ -20,13 +20,11 @@ public class SearchCommand extends Command {
 
         if ((args[0].contains("*") || args[0].contains("?")) ) {
             resultCode = patternSearch(args[0]);
-
-            return new ExecutionResult(resultCode, name, key, args);
         } else {
             resultCode = simpleSearch(args[0]);
         }
 
-        return new ExecutionResult(ResultCode.INVALID_KEY, name, key, args);
+        return new ExecutionResult(resultCode, name, key, args);
     }
 
     public ResultCode patternSearch(String searchString){

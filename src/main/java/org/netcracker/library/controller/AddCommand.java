@@ -14,18 +14,12 @@ public class AddCommand extends Command {
 
     @Override
     public ExecutionResult execute() {
-        ResultCode resultCode;
-
-        switch (key) {
-            case "-t":
-                resultCode = addTrack(args[0], args[1], args[2], args[3]);
-            case "-a":
-                resultCode = addAlbum(args[0], args[1]);
-            case "-s":
-                resultCode = addSinger(args[0]);
-            default:
-                resultCode = ResultCode.INVALID_KEY;
-        }
+        ResultCode resultCode = switch (key) {
+            case "-t" -> addTrack(args[0], args[1], args[2], args[3]);
+            case "-a" -> addAlbum(args[0], args[1]);
+            case "-s" -> addSinger(args[0]);
+            default -> ResultCode.INVALID_KEY;
+        };
 
         return new ExecutionResult(resultCode, name, key, args);
     }

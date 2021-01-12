@@ -13,18 +13,12 @@ public class DeleteCommand extends Command {
 
     @Override
     public ExecutionResult execute() {
-        ResultCode resultCode;
-
-        switch (key) {
-            case "-t" :
-                resultCode = deleteTrack(args[0], args[1], args[2]);
-            case "-a":
-                resultCode = deleteAlbum(args[0], args[1]);
-            case "-s":
-                resultCode = deleteSinger(args[0]);
-            default:
-                resultCode = ResultCode.INVALID_KEY;
-        }
+        ResultCode resultCode = switch (key) {
+            case "-t" -> deleteTrack(args[0], args[1], args[2]);
+            case "-a" -> deleteAlbum(args[0], args[1]);
+            case "-s" -> deleteSinger(args[0]);
+            default -> ResultCode.INVALID_KEY;
+        };
 
         return new ExecutionResult(resultCode, name, key, args);
     }
