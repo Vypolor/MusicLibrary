@@ -5,25 +5,13 @@ import org.netcracker.library.view.OutputHandler;
 
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class InputHandler {
     private Reader input;
-    private final Map<String, Class<? extends Command>> commands = new HashMap<>();
 
     {
         input = new InputStreamReader(System.in);
-
-        commands.put("/?", HelpCommand.class);
-        commands.put("/add", AddCommand.class);
-        commands.put("/delete", DeleteCommand.class);
-        commands.put("/exit", ExitCommand.class);
-        commands.put("/search", SearchCommand.class);
-        commands.put("/show", ShowCommand.class);
-        commands.put("/save", SaveCommand.class);
-        commands.put("/load", LoadCommand.class);
     }
 
     public InputHandler() {

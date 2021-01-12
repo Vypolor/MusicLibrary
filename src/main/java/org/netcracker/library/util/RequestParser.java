@@ -21,6 +21,8 @@ public class RequestParser {
         commands.put("/exit", ExitCommand.class);
         commands.put("/search", SearchCommand.class);
         commands.put("/show", ShowCommand.class);
+        commands.put("/save", SaveCommand.class);
+        commands.put("/load", LoadCommand.class);
     }
 
     public static Command parseCommand(String request) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
